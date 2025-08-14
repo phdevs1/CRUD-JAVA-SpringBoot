@@ -1,11 +1,14 @@
 package pe.example1.Projecto1.service;
 
+import pe.example1.Projecto1.model.dto.ClientDto;
 import pe.example1.Projecto1.model.entity.Client;
 
-public interface IClient {
-    Client save(Client client);
+public interface IClientService {
+    Client save(ClientDto client);
 
     Client findById(Integer id);
 
     void delete(Client client);
+
+    boolean existsById(Integer id);
 }
