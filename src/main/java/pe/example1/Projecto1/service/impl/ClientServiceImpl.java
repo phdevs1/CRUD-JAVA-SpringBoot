@@ -8,11 +8,18 @@ import pe.example1.Projecto1.model.dto.ClientDto;
 import pe.example1.Projecto1.model.entity.Client;
 import pe.example1.Projecto1.service.IClientService;
 
+import java.util.List;
+
 @Service
 public class ClientServiceImpl implements IClientService {
 
     @Autowired
     private ClientDao clientDao;
+
+    @Override
+    public List<Client> list() {
+        return (List) clientDao.findAll();
+    }
 
     @Transactional
     @Override

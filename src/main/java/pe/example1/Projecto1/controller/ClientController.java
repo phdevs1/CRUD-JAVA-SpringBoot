@@ -17,6 +17,8 @@ import pe.example1.Projecto1.model.entity.Client;
 import pe.example1.Projecto1.model.payload.MessageResponse;
 import pe.example1.Projecto1.service.IClientService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 public class ClientController {
@@ -122,6 +124,24 @@ public class ClientController {
         return new ResponseEntity<>(MessageResponse.builder()
                 .message("")
                 .object(clientDto)
+                .build()
+                , HttpStatus.OK);
+    }
+
+    @GetMapping("clients")
+    public ResponseEntity<?> list(){
+        List<Client> list = clientService.list();
+        if (list == null){
+            return new ResponseEntity<>(MessageResponse.builder()
+                    .message("dont exists registers")
+                    .object(null)
+                    .build()
+                    , HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(MessageResponse.builder()
+                .message("")
+                .object(list)
                 .build()
                 , HttpStatus.OK);
     }
