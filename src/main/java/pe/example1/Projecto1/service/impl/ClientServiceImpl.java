@@ -4,18 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.example1.Projecto1.model.dao.ClientDao;
+import pe.example1.Projecto1.model.dto.ClientDto;
 import pe.example1.Projecto1.model.entity.Client;
-import pe.example1.Projecto1.service.IClient;
+import pe.example1.Projecto1.service.IClientService;
 
 @Service
-public class ClientImpl implements IClient {
+public class ClientServiceImpl implements IClientService {
 
     @Autowired
     private ClientDao clientDao;
 
     @Transactional
     @Override
-    public Client save(Client client) {
+    public Client save(ClientDto clientDto) {
+        Client client = Client.builder()
+                .id(clientDto.getId())
+                .name(clientDto.getName())
+                .lastName(clientDto.getLastName())
+                .email(clientDto.getEmail())
+                .registrationDate(clientDto.getRegistrationDate())
+                .build();
         return clientDao.save(client);
     }
 
@@ -29,5 +37,10 @@ public class ClientImpl implements IClient {
     @Override
     public void delete(Client client) {
         clientDao.delete(client);
+    }
+
+    @Override
+    public boolean existsById(Integer id) {
+        return clientDao.existsById(id);
     }
 }
